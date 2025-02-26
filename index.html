@@ -137,6 +137,19 @@
         }
     </style>
     <script>
+        document.addEventListener("contextmenu", function (e) {
+    e.preventDefault(); // Chặn menu chuột phải
+});
+
+document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && (e.key === "s" || e.key === "u")) {
+        e.preventDefault(); // Chặn Ctrl + S và Ctrl + U
+    }
+    if (e.key === "F12") {
+        e.preventDefault(); // Chặn F12
+    }
+});
+
         // 🕒 Thời gian bắt đầu và kết thúc
 const startDate = new Date("2025-02-27T20:00:00"); // Bắt đầu
 const endDate = new Date("2025-02-27T20:15:00"); // Kết thúc
