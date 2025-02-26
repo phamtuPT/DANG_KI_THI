@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng kí thi thử Đợt 4</title>
-    <link rel="icon" href="./1.ico" type="image/x-icon">
+    <title>Hình ảnh toàn màn hình</title>
     <style>
         * {
             margin: 0;
@@ -39,11 +38,8 @@
             display: block;
             width: 40vw;
             max-width: 300px;
-            height: auto;
-            transform: translate(-50%, -50%);
             animation: pulse 1s ease-in-out infinite;
             z-index: 10;
-            will-change: transform;
         }
         a.button-link img, a.button-link-secondary img {
             width: 100%;
@@ -52,9 +48,9 @@
         }
 
         @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .overlay {
@@ -76,18 +72,18 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
             background: #fff8f6;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
             z-index: 30;
             pointer-events: none;
             font-family: Arial, sans-serif;
-            width: 80%;
-            max-width: 400px;
+            width: 70%;
+            max-width: 320px;
         }
         .popup.show {
             opacity: 1;
@@ -99,36 +95,42 @@
             pointer-events: auto;
         }
         .popup button {
-            margin-top: 8px;
-            padding: 6px 12px;
+            margin-top: 5px;
+            padding: 4px 10px;
             border: none;
-            background: red;
+            background: #d9534f;
             color: white;
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 12px;
         }
         .popup h3 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: black;
         }
         .popup p {
-            font-size: 14px;
+            font-size: 12px;
             color: #333;
         }
     </style>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function centerButton(selector, offsetY) {
-                let button = document.querySelector(selector);
-                if (button) {
-                    button.style.left = `45%`;
-                    button.style.top = `calc(45% + ${offsetY}px)`;
+        document.addEventListener("DOMContentLoaded", () => {
+            function positionButtons() {
+                let btn1 = document.querySelector(".button-link");
+                let btn2 = document.querySelector(".button-link-secondary");
+                
+                if (btn1 && btn2) {
+                    btn1.style.left = "25%";
+                    btn1.style.bottom = "20px";
+                    btn1.style.transform = "translateX(-50%)";
+                    
+                    btn2.style.left = "25%";
+                    btn2.style.bottom = "80px"; // Cách nút đầu 60px
+                    btn2.style.transform = "translateX(-50%)";
                 }
             }
-            centerButton('.button-link', 120);
-            centerButton('.button-link-secondary', 90);
+            positionButtons();
         });
 
         function showPopup() {
