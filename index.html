@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hình ảnh toàn màn hình</title>
+    <title>Đăng kí thi thử Đợt 4</title>
+    <link rel="icon" href="./1.ico" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -72,18 +73,18 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
             background: #fff8f6;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             text-align: center;
-            font-size: 14px;
+            font-size: 16px;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
             z-index: 30;
             pointer-events: none;
             font-family: Arial, sans-serif;
-            width: 70%;
-            max-width: 320px;
+            width: 80%;
+            max-width: 600px;
         }
         .popup.show {
             opacity: 1;
@@ -95,22 +96,22 @@
             pointer-events: auto;
         }
         .popup button {
-            margin-top: 5px;
-            padding: 4px 10px;
+            margin-top: 10px;
+            padding: 8px 15px;
             border: none;
-            background: #d9534f;
+            background: #cf140e;
             color: white;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 5px;
+            font-size: 14px;
         }
         .popup h3 {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: black;
         }
         .popup p {
-            font-size: 12px;
+            font-size: 14px;
             color: #333;
         }
 
@@ -118,65 +119,67 @@
             .button-link-secondary {
                 display: none;
             }
+            .popup {
+                width: 90%;
+                max-width: 400px;
+            }
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    function positionButtons() {
-        let btn1 = document.querySelector(".button-link");
-        let btn2 = document.querySelector(".button-link-secondary");
+            function positionButtons() {
+                let btn1 = document.querySelector(".button-link");
+                let btn2 = document.querySelector(".button-link-secondary");
 
-        if (window.innerWidth <= 767) { // Giao diện điện thoại
-            if (btn1) {
-                btn1.style.left = "27%";
-                btn1.style.bottom = "45px";
-                btn1.style.transform = "translateX(-50%)";
+                if (window.innerWidth <= 767) { // Giao diện điện thoại
+                    if (btn1) {
+                        btn1.style.left = "25%";
+                        btn1.style.bottom = "30px";
+                        btn1.style.transform = "translateX(-50%)";
+                    }
+                    if (btn2) {
+                        btn2.style.display = "none"; // Ẩn nút thứ hai trên điện thoại
+                    }
+                } else { // Giao diện máy tính
+                    if (btn1) {
+                        btn1.style.left = "70%";
+                        btn1.style.bottom = "350px";
+                        btn1.style.transform = "translateX(-50%)";
+                    }
+                    if (btn2) {
+                        btn2.style.display = "block";
+                        btn2.style.left = "70%";
+                        btn2.style.bottom = "150px";
+                        btn2.style.transform = "translateX(-50%)";
+                    }
+                }
             }
-            if (btn2) {
-                btn2.style.display = "none"; // Ẩn nút thứ hai trên điện thoại
+            positionButtons();
+            window.addEventListener("resize", positionButtons);
+        });
+
+        function showPopup() {
+            let popup = document.querySelector("[data-popup]");
+            let popupText = popup.querySelector("p");
+
+            if (window.innerWidth <= 767) {
+                popup.style.width = "90%";
+                popup.style.maxWidth = "400px";
+                popupText.innerHTML = "Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau! Hãy sử dụng máy tính để có trải nghiệm tốt nhất!";
+            } else {
+                popup.style.width = "80%";
+                popup.style.maxWidth = "600px";
+                popupText.innerHTML = "Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!";
             }
-        } else { // Giao diện máy tính
-            if (btn1) {
-                btn1.style.left = "70%";
-                btn1.style.bottom = "350px";
-                btn1.style.transform = "translateX(-50%)";
-            }
-            if (btn2) {
-                btn2.style.display = "block"; // Hiển thị nút thứ hai trên máy tính
-                btn2.style.left = "70%";
-                btn2.style.bottom = "150px";
-                btn2.style.transform = "translateX(-50%)";
-            }
+
+            popup.classList.add("show");
+            document.querySelector("[data-overlay]").classList.add("show");
         }
-    }
-    positionButtons();
-    window.addEventListener("resize", positionButtons); // Cập nhật khi thay đổi kích thước màn hình
-});
 
-
-function showPopup() {
-    let popup = document.querySelector("[data-popup]");
-    let popupText = popup.querySelector("p");
-
-    if (window.innerWidth <= 767) {  // Giao diện điện thoại
-        popup.style.width = "80%";
-        popup.style.maxWidth = "280px";
-        popupText.innerHTML = "Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025</b>. Truy cập lại sau!";
-    } else {  // Giao diện máy tính
-        popup.style.width = "60%";
-        popup.style.maxWidth = "500px";
-        popupText.innerHTML = "Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Quay lại sau!";
-    }
-
-    popup.classList.add("show");
-    document.querySelector("[data-overlay]").classList.add("show");
-}
-
-function closePopup() {
-    document.querySelector("[data-popup]").classList.remove("show");
-    document.querySelector("[data-overlay]").classList.remove("show");
-}
-
+        function closePopup() {
+            document.querySelector("[data-popup]").classList.remove("show");
+            document.querySelector("[data-overlay]").classList.remove("show");
+        }
     </script>
 </head>
 <body>
@@ -186,12 +189,11 @@ function closePopup() {
     <a href="https://aecktest.ddns.net/" class="button-link-secondary">
         <img src="nut2.png" alt="Nút bấm thứ hai">
     </a>
-
     <div data-overlay class="overlay" onclick="closePopup()"></div>
     <div data-popup class="popup">
-        <h3>Mã không chính xác</h3>
-        <p>Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Quay lại sau!</p>
-        <button onclick="closePopup()">Đóng</button>
+        <h3>Thông báo</h3>
+        <p>Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!</p>
+        <button onclick="closePopup()">Xác nhận</button>
     </div>
 </body>
 </html>
