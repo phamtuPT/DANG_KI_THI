@@ -137,83 +137,101 @@
         }
     </style>
     <script>
-        // ==========================
-// 🕒 Định nghĩa thời gian bắt đầu chạy
-// ==========================
-// 🕒 Thời gian bắt đầu chạy tiến trình
-const startDate = new Date("2025-02-27T02:30:00"); // Đặt ngày giờ bắt đầu
+        // 🕒 Thời gian bắt đầu và kết thúc
+const startDate = new Date("2025-02-27T20:00:00"); // Bắt đầu
+const endDate = new Date("2025-02-27T20:15:00"); // Kết thúc
 
-let progress = parseInt(localStorage.getItem("progress")) || 0;
-let started = localStorage.getItem("started") === "true";
-let interval = null; // Để tránh setInterval bị chạy nhiều lần
-
-function shouldStartProgress() {
-    return new Date() >= startDate;
-}
-
-function runProgress() {
-    if (!shouldStartProgress() || interval) return; // Ngăn chặn chạy nhiều lần
-
-    started = true;
-    localStorage.setItem("started", "true");
-
-    interval = setInterval(() => {
-        if (progress < 100) {
-            progress++;
-            localStorage.setItem("progress", progress);
-        } else {
-            clearInterval(interval);
-        }
-    }, 1000);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    function positionButtons() {
-        let btn = document.querySelector(".button-link");
-        if (window.innerWidth <= 767) {
-            btn.style.left = "25%";
-            btn.style.bottom = "30px";
-            btn.style.transform = "translateX(-50%)";
-        } else {
-            btn.style.left = "70%";
-            btn.style.bottom = "350px";
-            btn.style.transform = "translateX(-50%)";
-        }
-    }
-    positionButtons();
-    window.addEventListener("resize", positionButtons);
-
-    // Nếu đã đến thời gian, chạy tiến trình
-    if (shouldStartProgress()) runProgress();
-});
-
-function showPopup() {
-    let popup = document.querySelector("[data-popup]");
-    let overlay = document.querySelector("[data-overlay]");
+function updateProgressBar() {
+    let now = new Date();
     let progressBar = document.querySelector(".progress-bar div");
 
-    popup.classList.add("show");
-    overlay.classList.add("show");
+    if (!progressBar) return;
 
-    // Cập nhật thanh tiến độ mỗi khi mở popup
-    progressBar.style.width = progress + "%";
-
-    if (progress <= 40) {
-        progressBar.style.background = "green";
-    } else if (progress <= 80) {
-        progressBar.style.background = "orange";
+    if (now < startDate) {
+        progressBar.style.width = "0%"; 
+    } else if (now >= endDate) {
+        progressBar.style.width = "100%"; 
+        progressBar.style.background = "red"; 
     } else {
-        progressBar.style.background = "red";
+        let progress = ((now - startDate) / (endDate - startDate)) * 100;
+        progressBar.style.width = progress + "%";
+
+        if (progress <= 40) {
+    progressBar.style.background = "rgba(0, 128, 0, 0.8)"; // Xanh lá, 80% đậm
+} else if (progress <= 80) {
+    progressBar.style.background = "rgba(255, 165, 0, 0.8)"; // Cam, 80% đậm
+} else {
+    progressBar.style.background = "rgba(207, 20, 14, 0.8)"; // Đỏ, 80% đậm
+}
+
     }
 }
 
-function closePopup() {
-    document.querySelector("[data-popup]").classList.remove("show");
-    document.querySelector("[data-overlay]").classList.remove("show");
+// 📌 Hiển thị popup và chỉ cập nhật thanh tiến độ khi mở
+function showPopup() {
+    document.querySelector("[data-popup]").classList.add("show");
+    document.querySelector("[data-overlay]").classList.add("show");
+    updateProgressBar(); // Cập nhật tiến trình khi mở popup
 }
 
+// 📌 Ẩn popup
+document.addEventListener("DOMContentLoaded", () => {
+            function positionButtons() {
+                let btn1 = document.querySelector(".button-link");
+                let btn2 = document.querySelector(".button-link-secondary");
 
-        
+                if (window.innerWidth <= 767) { // Giao diện điện thoại
+                    if (btn1) {
+                        btn1.style.left = "25%";
+                        btn1.style.bottom = "30px";
+                        btn1.style.transform = "translateX(-50%)";
+                    }
+                    if (btn2) {
+                        btn2.style.display = "none"; // Ẩn nút thứ hai trên điện thoại
+                    }
+                } else { // Giao diện máy tính
+                    if (btn1) {
+                        btn1.style.left = "65%";
+                        btn1.style.bottom = "290px";
+                        btn1.style.transform = "translateX(-50%)";
+                    }
+                    if (btn2) {
+                        btn2.style.display = "none";
+                        btn2.style.left = "70%";
+                        btn2.style.bottom = "150px";
+                        btn2.style.transform = "translateX(-50%)";
+                    }
+                }
+            }
+            positionButtons();
+            window.addEventListener("resize", positionButtons);
+        });
+
+        function showPopup() {
+            let popup = document.querySelector("[data-popup]");
+            let popupText = popup.querySelector("p");
+
+            if (window.innerWidth <= 767) {
+                popup.style.width = "90%";
+                popup.style.maxWidth = "400px";
+                popupText.innerHTML = "Cổng đăng kí sẽ bắt đầu mở vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau! Hãy sử dụng máy tính để có trải nghiệm tốt nhất!";
+            } else {
+                popup.style.width = "80%";
+                popup.style.maxWidth = "600px";
+                popupText.innerHTML = "Cổng đăng kí sẽ bắt đầu mở vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!";
+            }
+
+            popup.classList.add("show");
+            document.querySelector("[data-overlay]").classList.add("show");
+        }
+
+        function closePopup() {
+            document.querySelector("[data-popup]").classList.remove("show");
+            document.querySelector("[data-overlay]").classList.remove("show");
+        }
+
+
+  
     </script>
 </head>
 <body>
