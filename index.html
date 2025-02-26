@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng kí Đợt 4</title>
+    <link rel="icon" href="1.ico" type="image/x-icon"> <!-- Thêm favicon -->
+    <!-- Google Fonts (nếu muốn dùng Roboto) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        img.fullscreen {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        a.button-link {
+            position: absolute;
+            display: block;
+            width: 300px;
+            height: auto;
+            transform: translate(-50%, -50%);
+            animation: pulse 1s ease-in-out infinite;
+            z-index: 10;
+        }
+        a.button-link img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Lớp nền mờ phủ toàn màn hình */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5); /* Nền tối */
+            backdrop-filter: blur(8px); /* Hiệu ứng mờ */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+            pointer-events: none; /* Ngăn chặn tương tác khi ẩn */
+        }
+
+        /* Bảng thông báo */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: #fff8f6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 18px;
+            font-family: "Arial", sans-serif; /* Đổi font chữ */
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        /* Nếu muốn dùng Google Fonts Roboto, thay đổi font ở đây */
+        .popup {
+            font-family: "Roboto", sans-serif;
+        }
+
+        /* Hiển thị popup */
+        .popup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: none;
+            background: rgb(215, 7, 7);
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .popup h2 {
+            font-size: 22px;
+            font-weight: bold;
+            color: black;
+        }
+        .popup p {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+    <script>
+        function moveButton(x, y) {
+            let button = document.querySelector('.button-link');
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
+        function showPopup() {
+            document.getElementById("popup").classList.add("show");
+            document.getElementById("overlay").classList.add("show");
+        }
+
+        function closePopup() {
+            document.getElementById("popup").classList.remove("show");
+            document.getElementById("overlay").classList.remove("show");
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            moveButton(1150, 350);
+        });
+    </script>
+</head>
+<body>
+    <img src="nen.png" alt="Hình ảnh toàn màn hình" class="fullscreen">
+    <a href="javascript:void(0);" class="button-link" onclick="showPopup()">
+        <img src="nut.png" alt="Nút bấm">
+    </a>
+
+    <!-- Nền mờ -->
+    <div id="overlay" class="overlay" onclick="closePopup()"></div>
+
+    <!-- Thông báo -->
+    <div id="popup" class="popup">
+        <h3>Thông báo</h3>
+        <p>Thời gian đăng kí dự thi sẽ bắt đầu vào <b>20h00, ngày 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!!!</p>
+        <button onclick="closePopup()">Xác nhận</button>
+    </div>
+</body>
+</html>
