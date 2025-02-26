@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng kí Đợt 4</title>
-    <link rel="icon" href="1.ico" type="image/x-icon"> <!-- Thêm favicon -->
-    <!-- Google Fonts (nếu muốn dùng Roboto) -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>Hình ảnh toàn màn hình</title>
     <style>
         * {
             margin: 0;
@@ -27,7 +23,7 @@
             height: 100vh;
             object-fit: cover;
         }
-        a.button-link {
+        a.button-link, a.button-link-secondary {
             position: absolute;
             display: block;
             width: 300px;
@@ -36,7 +32,7 @@
             animation: pulse 1s ease-in-out infinite;
             z-index: 10;
         }
-        a.button-link img {
+        a.button-link img, a.button-link-secondary img {
             width: 100%;
             height: auto;
             cursor: pointer;
@@ -55,12 +51,12 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5); /* Nền tối */
-            backdrop-filter: blur(8px); /* Hiệu ứng mờ */
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 20;
-            pointer-events: none; /* Ngăn chặn tương tác khi ẩn */
+            pointer-events: none;
         }
 
         /* Bảng thông báo */
@@ -75,16 +71,11 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             text-align: center;
             font-size: 18px;
-            font-family: "Arial", sans-serif; /* Đổi font chữ */
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
             z-index: 30;
             pointer-events: none;
-        }
-
-        /* Nếu muốn dùng Google Fonts Roboto, thay đổi font ở đây */
-        .popup {
-            font-family: "Roboto", sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         /* Hiển thị popup */
@@ -102,7 +93,7 @@
             margin-top: 10px;
             padding: 8px 15px;
             border: none;
-            background: rgb(215, 7, 7);
+            background: red;
             color: white;
             cursor: pointer;
             border-radius: 5px;
@@ -125,6 +116,12 @@
             button.style.top = `${y}px`;
         }
 
+        function moveSecondButton(x, y) {
+            let button = document.querySelector('.button-link-secondary');
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
         function showPopup() {
             document.getElementById("popup").classList.add("show");
             document.getElementById("overlay").classList.add("show");
@@ -136,7 +133,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            moveButton(1150, 350);
+            moveButton(1100, 300);
+            moveSecondButton(1100, 500);
         });
     </script>
 </head>
@@ -145,15 +143,18 @@
     <a href="javascript:void(0);" class="button-link" onclick="showPopup()">
         <img src="nut.png" alt="Nút bấm">
     </a>
+    <a href="https://aecktest.ddns.net/" class="button-link-secondary">
+        <img src="nut2.png" alt="Nút bấm thứ hai">
+    </a>
 
     <!-- Nền mờ -->
     <div id="overlay" class="overlay" onclick="closePopup()"></div>
 
     <!-- Thông báo -->
     <div id="popup" class="popup">
-        <h3>Thông báo</h3>
+        <h3>Mã không chính xác</h3>
         <p>Thời gian đăng kí dự thi sẽ bắt đầu vào <b>20h00, ngày 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!!!</p>
-        <button onclick="closePopup()">Xác nhận</button>
+        <button onclick="closePopup()">Đóng</button>
     </div>
 </body>
 </html>
