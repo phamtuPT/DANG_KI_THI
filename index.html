@@ -4,33 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng kí thi thử Đợt 4</title>
+    <link rel="icon" href="./1.ico" type="image/x-icon">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body {
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
+            background: no-repeat center center/cover;
         }
-        img.fullscreen {
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
+        
+        @media (min-width: 768px) {
+            body {
+                background-image: url('nen.png');
+            }
         }
+        
+        @media (max-width: 767px) {
+            body {
+                background-image: url('dt.png');
+            }
+        }
+
         a.button-link, a.button-link-secondary {
             position: absolute;
             display: block;
-            width: 300px;
+            width: 40vw;
+            max-width: 300px;
             height: auto;
             transform: translate(-50%, -50%);
             animation: pulse 1s ease-in-out infinite;
             z-index: 10;
+            will-change: transform;
         }
         a.button-link img, a.button-link-secondary img {
             width: 100%;
@@ -44,7 +57,6 @@
             100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* Lớp nền mờ phủ toàn màn hình */
         .overlay {
             position: fixed;
             top: 0;
@@ -58,27 +70,25 @@
             z-index: 20;
             pointer-events: none;
         }
-
-        /* Bảng thông báo */
         .popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
             background: #fff8f6;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
             z-index: 30;
             pointer-events: none;
             font-family: Arial, sans-serif;
+            width: 80%;
+            max-width: 400px;
         }
-
-        /* Hiển thị popup */
         .popup.show {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
@@ -88,58 +98,50 @@
             opacity: 1;
             pointer-events: auto;
         }
-
         .popup button {
-            margin-top: 10px;
-            padding: 8px 15px;
+            margin-top: 8px;
+            padding: 6px 12px;
             border: none;
             background: red;
             color: white;
             cursor: pointer;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 14px;
         }
-        .popup h2 {
-            font-size: 22px;
+        .popup h3 {
+            font-size: 18px;
             font-weight: bold;
             color: black;
         }
         .popup p {
-            font-size: 16px;
+            font-size: 14px;
             color: #333;
         }
     </style>
     <script>
-        function moveButton(x, y) {
-            let button = document.querySelector('.button-link');
-            button.style.left = `${x}px`;
-            button.style.top = `${y}px`;
-        }
-
-        function moveSecondButton(x, y) {
-            let button = document.querySelector('.button-link-secondary');
-            button.style.left = `${x}px`;
-            button.style.top = `${y}px`;
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            function centerButton(selector, offsetY) {
+                let button = document.querySelector(selector);
+                if (button) {
+                    button.style.left = `45%`;
+                    button.style.top = `calc(45% + ${offsetY}px)`;
+                }
+            }
+            centerButton('.button-link', 120);
+            centerButton('.button-link-secondary', 90);
+        });
 
         function showPopup() {
-            document.getElementById("popup").classList.add("show");
-            document.getElementById("overlay").classList.add("show");
+            document.querySelector("[data-popup]").classList.add("show");
+            document.querySelector("[data-overlay]").classList.add("show");
         }
-
         function closePopup() {
-            document.getElementById("popup").classList.remove("show");
-            document.getElementById("overlay").classList.remove("show");
+            document.querySelector("[data-popup]").classList.remove("show");
+            document.querySelector("[data-overlay]").classList.remove("show");
         }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            moveButton(1100, 300);
-            moveSecondButton(1100, 500);
-        });
     </script>
 </head>
 <body>
-    <img src="nen.png" alt="Hình ảnh toàn màn hình" class="fullscreen">
     <a href="javascript:void(0);" class="button-link" onclick="showPopup()">
         <img src="nut.png" alt="Nút bấm">
     </a>
@@ -147,13 +149,10 @@
         <img src="nut2.png" alt="Nút bấm thứ hai">
     </a>
 
-    <!-- Nền mờ -->
-    <div id="overlay" class="overlay" onclick="closePopup()"></div>
-
-    <!-- Thông báo -->
-    <div id="popup" class="popup">
-        <h3>Thông báo</h3>
-        <p>Thời gian đăng kí dự thi sẽ bắt đầu vào <b>20h00, ngày 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!!!</p>
+    <div data-overlay class="overlay" onclick="closePopup()"></div>
+    <div data-popup class="popup">
+        <h3>Mã không chính xác</h3>
+        <p>Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Quay lại sau!</p>
         <button onclick="closePopup()">Đóng</button>
     </div>
 </body>
