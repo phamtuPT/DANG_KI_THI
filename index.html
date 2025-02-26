@@ -113,34 +113,70 @@
             font-size: 12px;
             color: #333;
         }
+
+        @media (max-width: 767px) {
+            .button-link-secondary {
+                display: none;
+            }
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            function positionButtons() {
-                let btn1 = document.querySelector(".button-link");
-                let btn2 = document.querySelector(".button-link-secondary");
-                
-                if (btn1 && btn2) {
-                    btn1.style.left = "25%";
-                    btn1.style.bottom = "20px";
-                    btn1.style.transform = "translateX(-50%)";
-                    
-                    btn2.style.left = "25%";
-                    btn2.style.bottom = "80px"; // Cách nút đầu 60px
-                    btn2.style.transform = "translateX(-50%)";
-                }
-            }
-            positionButtons();
-        });
+    function positionButtons() {
+        let btn1 = document.querySelector(".button-link");
+        let btn2 = document.querySelector(".button-link-secondary");
 
-        function showPopup() {
-            document.querySelector("[data-popup]").classList.add("show");
-            document.querySelector("[data-overlay]").classList.add("show");
+        if (window.innerWidth <= 767) { // Giao diện điện thoại
+            if (btn1) {
+                btn1.style.left = "25%";
+                btn1.style.bottom = "30px";
+                btn1.style.transform = "translateX(-50%)";
+            }
+            if (btn2) {
+                btn2.style.display = "none"; // Ẩn nút thứ hai trên điện thoại
+            }
+        } else { // Giao diện máy tính
+            if (btn1) {
+                btn1.style.left = "70%";
+                btn1.style.bottom = "350px";
+                btn1.style.transform = "translateX(-50%)";
+            }
+            if (btn2) {
+                btn2.style.display = "block"; // Hiển thị nút thứ hai trên máy tính
+                btn2.style.left = "70%";
+                btn2.style.bottom = "150px";
+                btn2.style.transform = "translateX(-50%)";
+            }
         }
-        function closePopup() {
-            document.querySelector("[data-popup]").classList.remove("show");
-            document.querySelector("[data-overlay]").classList.remove("show");
-        }
+    }
+    positionButtons();
+    window.addEventListener("resize", positionButtons); // Cập nhật khi thay đổi kích thước màn hình
+});
+
+
+function showPopup() {
+    let popup = document.querySelector("[data-popup]");
+    let popupText = popup.querySelector("p");
+
+    if (window.innerWidth <= 767) {  // Giao diện điện thoại
+        popup.style.width = "80%";
+        popup.style.maxWidth = "280px";
+        popupText.innerHTML = "Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025</b>. Truy cập lại sau!";
+    } else {  // Giao diện máy tính
+        popup.style.width = "60%";
+        popup.style.maxWidth = "500px";
+        popupText.innerHTML = "Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Quay lại sau!";
+    }
+
+    popup.classList.add("show");
+    document.querySelector("[data-overlay]").classList.add("show");
+}
+
+function closePopup() {
+    document.querySelector("[data-popup]").classList.remove("show");
+    document.querySelector("[data-overlay]").classList.remove("show");
+}
+
     </script>
 </head>
 <body>
