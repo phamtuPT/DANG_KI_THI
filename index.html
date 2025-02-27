@@ -34,7 +34,7 @@
             }
         }
 
-        a.button-link {
+        a.button-link, a.button-link-secondary {
             position: absolute;
             display: block;
             width: 40vw;
@@ -42,7 +42,7 @@
             animation: pulse 1s ease-in-out infinite;
             z-index: 10;
         }
-        a.button-link img {
+        a.button-link img, a.button-link-secondary img {
             width: 100%;
             height: auto;
             cursor: pointer;
@@ -115,21 +115,10 @@
             color: #333;
         }
 
-        .progress-bar {
-            width: 100%;
-            background: #ddd;
-            border-radius: 5px;
-            margin-top: 10px;
-            height: 10px;
-            overflow: hidden;
-        }
-        .progress-bar div {
-            height: 100%;
-            width: 0;
-            background: green;
-        }
-
         @media (max-width: 767px) {
+            .button-link-secondary {
+                display: none;
+            }
             .popup {
                 width: 90%;
                 max-width: 400px;
@@ -137,58 +126,7 @@
         }
     </style>
     <script>
-        document.addEventListener("contextmenu", function (e) {
-    e.preventDefault(); // Chặn menu chuột phải
-});
-
-document.addEventListener("keydown", function (e) {
-    if (e.ctrlKey && (e.key === "s" || e.key === "u")) {
-        e.preventDefault(); // Chặn Ctrl + S và Ctrl + U
-    }
-    if (e.key === "F12") {
-        e.preventDefault(); // Chặn F12
-    }
-});
-
-        // 🕒 Thời gian bắt đầu và kết thúc
-const startDate = new Date("2025-02-27T20:00:00"); // Bắt đầu
-const endDate = new Date("2025-02-27T20:15:00"); // Kết thúc
-
-function updateProgressBar() {
-    let now = new Date();
-    let progressBar = document.querySelector(".progress-bar div");
-
-    if (!progressBar) return;
-
-    if (now < startDate) {
-        progressBar.style.width = "0%"; 
-    } else if (now >= endDate) {
-        progressBar.style.width = "100%"; 
-        progressBar.style.background = "red"; 
-    } else {
-        let progress = ((now - startDate) / (endDate - startDate)) * 100;
-        progressBar.style.width = progress + "%";
-
-        if (progress <= 40) {
-    progressBar.style.background = "rgba(0, 128, 0, 0.8)"; // Xanh lá, 80% đậm
-} else if (progress <= 80) {
-    progressBar.style.background = "rgba(255, 165, 0, 0.8)"; // Cam, 80% đậm
-} else {
-    progressBar.style.background = "rgba(207, 20, 14, 0.8)"; // Đỏ, 80% đậm
-}
-
-    }
-}
-
-// 📌 Hiển thị popup và chỉ cập nhật thanh tiến độ khi mở
-function showPopup() {
-    document.querySelector("[data-popup]").classList.add("show");
-    document.querySelector("[data-overlay]").classList.add("show");
-    updateProgressBar(); // Cập nhật tiến trình khi mở popup
-}
-
-// 📌 Ẩn popup
-document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             function positionButtons() {
                 let btn1 = document.querySelector(".button-link");
                 let btn2 = document.querySelector(".button-link-secondary");
@@ -204,12 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 } else { // Giao diện máy tính
                     if (btn1) {
-                        btn1.style.left = "65%";
-                        btn1.style.bottom = "290px";
+                        btn1.style.left = "70%";
+                        btn1.style.bottom = "350px";
                         btn1.style.transform = "translateX(-50%)";
                     }
                     if (btn2) {
-                        btn2.style.display = "none";
+                        btn2.style.display = "block";
                         btn2.style.left = "70%";
                         btn2.style.bottom = "150px";
                         btn2.style.transform = "translateX(-50%)";
@@ -227,11 +165,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.innerWidth <= 767) {
                 popup.style.width = "90%";
                 popup.style.maxWidth = "400px";
-                popupText.innerHTML = "Cổng đăng kí sẽ bắt đầu mở vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau! Hãy sử dụng máy tính để có trải nghiệm tốt nhất!";
+                popupText.innerHTML = "<b>Đang trong thời gian đăng kí ca thi</b>. Hãy sử dụng máy tính để có trải nghiệm tốt nhất!";
             } else {
                 popup.style.width = "80%";
                 popup.style.maxWidth = "600px";
-                popupText.innerHTML = "Cổng đăng kí sẽ bắt đầu mở vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!";
+                popupText.innerHTML = "<b>Đang trong thời gian đăng kí ca thi</b>.";
             }
 
             popup.classList.add("show");
@@ -242,21 +180,21 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector("[data-popup]").classList.remove("show");
             document.querySelector("[data-overlay]").classList.remove("show");
         }
-
-
-  
     </script>
 </head>
 <body>
     <a href="javascript:void(0);" class="button-link" onclick="showPopup()">
         <img src="nut.png" alt="Nút bấm">
     </a>
+    <a href="https://aecktest.ddns.net/" class="button-link-secondary">
+        <img src="nut2.png" alt="Nút bấm thứ hai">
+    </a>
     <div data-overlay class="overlay" onclick="closePopup()"></div>
     <div data-popup class="popup">
         <h3>Thông báo</h3>
-        <p>Thời gian đăng kí bắt đầu vào <b>20h00, 27/02/2025 (Thứ 5)</b>. Vui lòng quay lại sau!</p>
-        <div class="progress-bar"><div></div></div>
-        <button onclick="closePopup()">Xác nhận</button>
+        <p> <b>Đang trong thời gian đăng kí ca thi</b></p>
+        <button onclick="window.location.href='DKI/index.html'">Đăng kí</button>
+
     </div>
 </body>
 </html>
