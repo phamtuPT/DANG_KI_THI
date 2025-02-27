@@ -165,11 +165,11 @@
             if (window.innerWidth <= 767) {
                 popup.style.width = "90%";
                 popup.style.maxWidth = "400px";
-                popupText.innerHTML = "<b>Đang trong thời gian đăng kí ca thi</b>. Hãy sử dụng máy tính để có trải nghiệm tốt nhất!";
+                popupText.innerHTML = "<b>Đã hết ca thi</b>";
             } else {
                 popup.style.width = "80%";
                 popup.style.maxWidth = "600px";
-                popupText.innerHTML = "<b>Đang trong thời gian đăng kí ca thi</b>.";
+                popupText.innerHTML = "<b>Đã hết ca thi</b>";
             }
 
             popup.classList.add("show");
@@ -192,8 +192,8 @@
     <div data-overlay class="overlay" onclick="closePopup()"></div>
     <div data-popup class="popup">
         <h3>Thông báo</h3>
-        <p> <b>Đang trong thời gian đăng kí ca thi</b></p>
-        <button onclick="window.location.href='index2.html'">Đăng kí</button>
+        <p> <b>Đã hết ca thi</b></p>
+        <button onclick="window.location.href='DKI/index.html'">Xác nhận</button>
 
     </div>
 </body>
