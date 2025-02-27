@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./1.ico" type="image/x-icon">
+    <title>Đăng kí dự thi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('HUST.png'); /* Ảnh nền ngẫu nhiên */
+            background-size: cover;
+            background-position: center;
+            user-select: none; /* Ngăn chọn văn bản */
+            -webkit-user-drag: none; /* Ngăn kéo thả hình ảnh */
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 219, 219, 0.3); /* Lớp phủ màu hồng nhạt */
+            backdrop-filter: blur(2px); /* Tăng hiệu ứng mờ */
+            z-index: -1;
+        }
+
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (
+                event.key === "F12" ||
+                (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J" || event.key === "C")) ||
+                (event.ctrlKey && (event.key === "S" || event.key === "U"))
+            ) {
+                event.preventDefault();
+                alert("Chức năng này bị vô hiệu hóa!");
+            }
+        });
+
+        // Chặn chuột phải
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+            alert("Chuột phải đã bị vô hiệu hóa!");
+        });
+    </script>
+</head>
+<body>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScf4S3qWTni5uwiveR3htoka0CQj6oRFoBJuJehWCM_TYtL-w/viewform?embedded=true">
+        Đang tải…
+    </iframe>
+</body>
+</html>
